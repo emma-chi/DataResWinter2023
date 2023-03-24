@@ -1,0 +1,31 @@
+---
+title: "UDSI"
+author: "Shiyu Murashima"
+date: "2023-02-27"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+library(dplyr, warn.conflicts = FALSE)
+library(lubridate)
+
+# change to your file directory
+udsi <- read.csv("/Users/ShiyuMurashima/Downloads/USDM.csv") 
+
+udsi <- udsi[order(udsi$Week),]
+udsi2 <- udsi %>% mutate(Date = as.Date(Week))
+
+ggplot(data = udsi2, aes(x = Date, y = DSCI)) +
+  geom_line() +
+  geom_smooth() +
+  scale_x_date(breaks = seq.Date(from = as.Date("2000-01-04"), 
+                                 to = as.Date("2023-02-21"), 
+                                 by = 200)) +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5, 
+                                   hjust = 0.5)) +
+  labs(title = "California Drought Severity since 2000") +
+  ylab("Drought Severity and Coverage Index (DSCI)")
+```
+
